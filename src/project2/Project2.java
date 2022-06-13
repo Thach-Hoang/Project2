@@ -27,43 +27,9 @@ public class Project2 {
 
         Scanner keyboard = new Scanner(System.in);
 
-
-
         System.out.println("Please enter your name:");
         String name = keyboard.nextLine();
 
-        //basic greet and start the game
-        System.out.println("Welcome to \"Find your lost wedding ring\" game!");
-
-        String startTheGameChoice = "";
-        while (!startTheGameChoice.equalsIgnoreCase("y") && !startTheGameChoice.equalsIgnoreCase("n")) {
-            System.out.println("Do you want to start the game now? (y/n)");
-            startTheGameChoice = keyboard.nextLine();
-        }
-
-
-        //get & validate playerActions
-        String playerAction ="";
-        while (!playerAction.equalsIgnoreCase("GO") && !playerAction.equalsIgnoreCase("PICK") &&
-                !playerAction.equalsIgnoreCase("USE") && !playerAction.equalsIgnoreCase("SLEEP")
-                && !playerAction.equalsIgnoreCase("HELP")) {
-            //prompt the player to move
-            System.out.println("You're at the living room now. What do you want to do next?");
-            playerAction = keyboard.nextLine();
-        }
-        if (playerAction.equalsIgnoreCase("go"))
-
-            //display the rules
-            displayGameRules(name);
-
-            //display the moves options
-            displayMoveOptions();
-
-            //display the direction options
-            displayDirectionOptions();
-
-            //wounded action: moves %5 == 0, wounded 1 || PICK UP THE KNIFE || PICK UP THE KETTLE || USE THE BATHTUB
-            String wounded = woundedActions(playerAction);
 
     }
 
@@ -93,13 +59,4 @@ public class Project2 {
         System.out.println("South");
         System.out.println("East");
     }
-
-    public static String woundedActions(String playerAction) {
-        Scanner scanner = new Scanner(System.in);
-        if (true) {
-
-        }
-        return "";
-    }
-
 }
