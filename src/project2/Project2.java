@@ -1,6 +1,5 @@
 package project2;
 
-import javax.print.StreamPrintServiceFactory;
 import java.util.Scanner;
 
 public class Project2 {
@@ -19,11 +18,11 @@ public class Project2 {
 
         //brainstorming: right moves =3. make avocado toast: SEARCH the CUPBOARD(bread). SEARCH the FRIDGE(avocado).
         //-----SEARCH the DISHWASHER(plate). USE the OVEN to toast the avocado toast(bake).
-        //distractions: SEARCH the SINK = dirty plates, SEARCH the TRASHCAN = stink, SEARCH the STOVE=slightly burned=sleep.
+        //distractions: SEARCH the SINK = dirty plates, SEARCH the TRASHCAN = stink, SEARCH the STOVE=nothing.
 
         //choices:north: FRIDGE (search) {avocado, bread slices, ready to toast), OVEN (use) to toast the avocado toast.
-        //-----south: DISHWASHER (wash) the {dishes}, (get) the {knife}
-        //-----east: STOVE (use) {get burned,wounded; wounded %3 ==0, go to sleep}
+        //-----south: DISHWASHER (wash) the {dishes}, (get) the {knife} wounded; wounded %3 ==0, go to sleep}
+        //-----east: STOVE (use) {nothing},
         //-----west: KITCHEN TABLE (nothing)
 
         //get the user's name and greet
@@ -37,33 +36,45 @@ public class Project2 {
         while (playAgain.equalsIgnoreCase("y")) {
             System.out.println("You're at the kitchen and trying to make some avocado toast.");
 
-            //prompt for an action;
+            //declare and initialize wounds, turns, userAction
+            int wounds = 0;
+            int turns = 0;
             String userAction = "";
-            while (true) {
-                userAction = getUserAction(userAction);
-                displayDirectionOptions();
 
-                if (userAction.equalsIgnoreCase("go north")) {
-                    System.out.println("You saw a fridge and an oven.");
-                    reactToAction(userAction);
+            //ask for the next move
+            String nextMove = "y";
+            while (nextMove.equalsIgnoreCase("y")) {
 
-                } else if (userAction.equalsIgnoreCase("go south")) {
-                    System.out.println("You saw a dishwasher with dirty dishes and a clean knife.");
-                    reactToAction(userAction);
+                //prompt for an action and validate input
+                userAction = getValidUserAction(userAction);
 
-                } else if (userAction.equalsIgnoreCase("go east")) {
-                    System.out.println("You saw a stove.");
-                    reactToAction(userAction);
+                reactToUserAction(userAction, "GO NORTH", "There is a fridge and an oven in front of you now.");
 
+                reactToUserAction(userAction, "GO NORTH", "There is a fridge and an oven in front of you now.");
+                reactToUserAction(userAction, "GO SOUTH", "There is a dishwasher with a dirty knife and dirty plates in front of you.");
+                reactToUserAction(userAction, "GO EAST", "There is a stove in front of you.");
+                reactToUserAction(userAction, "GO WEST", "There is a kitchen table in front of you.");
+
+                reactToUserAction(userAction, "SEARCH THE FRIDGE", "You found some avocado and a loaf of bread.");
+                reactToUserAction(userAction, "USE THE OVEN", "You used the ingredients from the beside fridge to make an avocado toast!\n" +
+                        "Congratulation! You made your toast! Type GET MY TOAST to finish the game.");
+
+                reactToUserAction(userAction, "WASH THE DISHES", "You cleaned the dishes but splash the water all over the place.");
+                reactToUserAction(userAction, "PICK UP THE KNIFE", "Ouch! You cut yourself and got some fist aid on.");
+
+                reactToUserAction(userAction, "USE THE STOVE", "You couldn't turn on the stove. What was wrong with you? Ah~ stove have been broken already.");
+
+                reactToUserAction(userAction, "SEARCH THE TABLE", "There were nothing. It's just a plain table.");
+
+                //prompt to the next move
+                if (userAction.equalsIgnoreCase("GET MY TOAST")) {
+                    break;
                 } else {
-                    System.out.println("You saw a table. There is nothing to do with it.");
-                    reactToAction(userAction);
-                }
-                if (!userAction.equalsIgnoreCase("USE THE OVEN")) {
-                    continue;
+                    System.out.println("Continue? (y/n)");
+                    nextMove = keyboard.nextLine();
                 }
             }
-
+            //prompt to play again
             System.out.println("Do you want to play again? (y/n)");
             playAgain = keyboard.nextLine();
         }
@@ -71,25 +82,23 @@ public class Project2 {
     }
 
     public static void displayMoveOptions () {
-        System.out.println("Choose one of the moves:");
         System.out.println("SEARCH THE FRIDGE");
         System.out.println("USE THE OVEN");
         System.out.println("WASH THE DISHES");
-        System.out.println("GET THE KNIFE");
+        System.out.println("PICK UP THE KNIFE");
         System.out.println("USE THE STOVE");
         System.out.println("SLEEP");
         System.out.println("HELP");
     }
 
     public static void displayDirectionOptions () {
-        System.out.println("Choose one of the directions:");
         System.out.println("GO NORTH");
         System.out.println("GO WEST");
         System.out.println("GO SOUTH");
         System.out.println("GO EAST");
     }
 
-    public static String getUserAction(String userAction) {
+    public static String getValidUserAction(String userAction) {
         Scanner scanner = new Scanner(System.in);
         while (!userAction.equalsIgnoreCase("SEARCH THE FRIDGE") && !userAction.equalsIgnoreCase("USE THE OVEN")
                 && !userAction.equalsIgnoreCase("WASH THE DISHES") && !userAction.equalsIgnoreCase("GET THE KNIFE")
@@ -104,37 +113,12 @@ public class Project2 {
 
     }
 
-    public static void reactToAction(String userAction) {
-        if (userAction.equalsIgnoreCase("search the fridge")) {
-            System.out.println("You found some slices of avocado and a couple slices of bread!");
-
-        } else if (userAction.equalsIgnoreCase("use the oven")) {
-            System.out.println("You put the avocado and slices of bread in the fridge to the oven, turned the oven on and toasted the avocado toast!");
-            System.out.println("Say \"YAY\" to congratulate yourself!");
-
-        } else if (userAction.equalsIgnoreCase("wash the dishes")) {
-            System.out.println("You washed the dishes and splashed the water all over the place!");
-
-        } else if (userAction.equalsIgnoreCase("get the knife")) {
-            System.out.println("You were so clumsy that you cut your finger with the knife and have to go put first aid on!");
-
-        } else {
-            System.out.println("You turned on the stove but there is no gas! Ah~ You forgot that it's a electric one, but unfortunately" +
-                    ", it broke anyway.");
-
-        }
-        System.out.println("What do you want to do next?");
-
-    }
-
-    public static String getUserToMoveAgain(String moveAgain, String userNavigation) {
+    public static String reactToUserAction(String userAction, String moves, String prompt) {
         Scanner scanner = new Scanner(System.in);
-        //prompt to move again
-        while (moveAgain.equalsIgnoreCase("y")) {
-            userNavigation = getUserNavigation(userNavigation);
-            System.out.println("Do you want to move to anywhere else? (y/n)");
-            moveAgain = scanner.nextLine();
+        if (userAction.equalsIgnoreCase(moves)) {
+            System.out.println(prompt);
+        } else {
+            System.out.println();
         }
-        return moveAgain;
     }
 }
